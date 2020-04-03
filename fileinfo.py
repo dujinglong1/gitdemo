@@ -197,4 +197,37 @@ def chai():
     ybar.grid(row=0,column=1,sticky=tk.NS)
     ybar.config(command=a_text.yview)
     a_text.config(yscrollcommand=ybar.set)
-    dt.mainloop()           
+    dt.mainloop()  
+
+a=tk.Tk()
+a.title('文档编辑器')
+a.geometry('800x600')
+a_text=tk.Text(a,width=107,height=46)
+a_text.grid(row=0,column=0,padx=10,pady=10)
+
+ybar=tk.Scrollbar(a,orient=tk.VERTICAL,relief=tk.GROOVE)
+ybar.grid(row=0,column=1,sticky=tk.NS)
+ybar.config(command=a_text.yview)
+a_text.config(yscrollcommand=ybar.set)
+
+menubar=tk.Menu(a)
+c=[openfile,closefile]
+i=0
+filemenu=tk.Menu(menubar,tearoff=0)
+for item in ['打开','关闭']:
+    filemenu.add_command(label=item,command=c[i])
+    filemenu.add_separator()
+    i=i+1
+menubar.add_cascade(label='文件',menu=filemenu)
+a['menu']=menubar
+
+d=[zong,pin,keywords,th,chai]
+tongjimenu=tk.Menu(menubar,tearoff=0)
+i=0
+for item in ['单词总数','单词词频','关键词','替换','拆词']:
+    tongjimenu.add_command(label=item,command=d[i])
+    tongjimenu.add_separator()
+    i=i+1
+menubar.add_cascade(label='功能',menu=tongjimenu)
+a['menu']=menubar
+a.mainloop()         
