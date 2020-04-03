@@ -129,4 +129,72 @@ def keywords():
     mpl.rcParams['font.sans-serif']=['SimHei']
     plt.show()
     
-    gjc.mainloop()               
+    gjc.mainloop()    
+
+def th():
+    a4=a_text.get(1.0,tk.END)
+    b4=a4.split()
+    c4=tk.Tk()
+    c4.geometry('200x150')
+    c4_label_1=tk.Label(c4,text='请输入您想替换的词：',width=20,height=1)
+    c4_label_1.grid(row=0,column=0,padx=20,pady=3)
+    c4_text_1=tk.Text(c4,width=20,height=1)
+    c4_text_1.grid(row=1,column=0,padx=20,pady=3)
+    c4_label_2=tk.Label(c4,text='请输入您替换后的词：',width=20,height=1)
+    c4_label_2.grid(row=2,column=0,padx=20,pady=3)
+    c4_text_2=tk.Text(c4,width=20,height=1)
+    c4_text_2.grid(row=3,column=0,padx=20,pady=3)
+    c4_button=tk.Button(c4,text='开始替换',command=lambda:ksth(c4_text_1,c4_text_2,b4,c4))
+    c4_button.grid(row=4,column=0,padx=20,pady=3,sticky=tk.E)
+    c4.mainloop()
+
+def ksth(c5_text_1,c5_text_2,b5,c5):
+    w1=c5_text_1.get(1.0,tk.END)
+    w2=c5_text_2.get(1.0,tk.END)
+    w1_list=list(w1)
+    w2_list=list(w2)
+    w1_list.remove(w1_list[-1])
+    w2_list.remove(w2_list[-1])
+    w1=''.join(w1_list)
+    w2=''.join(w2_list)
+    if w1 in b5 or w1+',' in b5 or w1+'.' in b5 or w1+'?' in b5 or w1+'!' in b5:
+        while w1 in b5:
+            b5[b5.index(w1)]=w2
+        while w1+',' in b5:
+            b5[b5.index(w1+',')]=w2+','
+        while w1+'.' in b5:
+            b5[b5.index(w1+'.')]=w2+'.'
+        while w1+'?' in b5:
+            b5[b5.index(w1+'?')]=w2+"?"
+        while w1+'!' in b5:
+            b5[b5.index(w1+'!')]=w2+'!'
+        a_text.delete(1.0,tk.END)
+        a_text.insert(tk.INSERT,' '.join(b5))
+        c5.destroy()
+    else:
+        wrong=tk.Tk()
+        wrong.geometry('230x150')
+        wrong_label=tk.Label(wrong,text='错误：您需要替换的词不在文本中！')
+        wrong_label.grid(row=0,column=0,padx=10,pady=10)
+        wrong_button=tk.Button(wrong,text='OK',command=lambda:wrong.destroy())
+        wrong_button.grid(row=1,column=0,padx=10,pady=30,sticky=tk.E)
+        wrong.mainloop()
+        
+
+
+def chai():
+    g=a_text.get(1.0,tk.END)
+    for i in range(len(g)):
+        if ord(g[i])<65 or ord(g[i])>122 or 90<ord(g[i])<97:
+            g=g.replace(g[i],' ')
+    g=g.lower()
+    dt=tk.Tk()
+    dt.geometry('800x600')
+    dt_text=tk.Text(dt,width=107,height=46)
+    dt_text.grid(row=0,column=0,padx=10,pady=10)
+    dt_text.insert(tk.INSERT,g)
+    ybar=tk.Scrollbar(dt,orient=tk.VERTICAL,relief=tk.GROOVE)
+    ybar.grid(row=0,column=1,sticky=tk.NS)
+    ybar.config(command=a_text.yview)
+    a_text.config(yscrollcommand=ybar.set)
+    dt.mainloop()           
